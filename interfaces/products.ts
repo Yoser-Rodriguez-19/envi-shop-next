@@ -10,6 +10,11 @@ export interface IProduct {
     title: string;
     type: IType;
     gender: 'men'|'women'|'kid'|'unisex'
+    
+
+    //TODO: Agrgar createdAd y updateAt
+    createdAt: String;
+    updatedAt: String;
 }
 
 export type ISize = 'XS'|'S'|'M'|'L'|'XL'|'XXL'|'XXXL';
