@@ -1,12 +1,17 @@
 import { Typography } from '@mui/material';
 import type { NextPage } from 'next'
 import { ShopLayout } from '../components/layouts';
-import { initialData } from '../database/products';
+// import { initialData } from '../database/products';
 import { ProductList } from '../components/products/ProductList';
+import { FullScreenLoading } from '../components/ui';
+import { useProducts } from '../hooks';
 
 
 
-const Home: NextPage = () => {
+const HomePage: NextPage = () => {
+
+  const { products, isLoading } = useProducts('/products');
+
   return (
     <ShopLayout
       title={'enviExpress-shop'}
@@ -15,13 +20,17 @@ const Home: NextPage = () => {
       <Typography variant='h1' component='h1'>Tienda</Typography>
       <Typography variant='h2' sx={{ mb: 1 }}>Todos los productos</Typography>
 
+      {
+        isLoading
+          ? <FullScreenLoading />
+          : <ProductList products={products}/>
+      
+      }
 
-      <ProductList 
-        products={initialData.products as any}
-      />
+
 
     </ShopLayout>
   )
 }
 
-export default Home
+export default HomePage

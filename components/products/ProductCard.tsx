@@ -11,14 +11,15 @@ interface Props {
 export const ProductCard: FC<Props> = ({ product }) => {
 
   const [isHovered, setisHovered] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
 
   // memorisamos el productImage para que no se vuelva a recalcular siempre 
   const productImage = useMemo(() => {
 
     return isHovered
-      ? `products/${  product.images[1] }`
-      : `products/${  product.images[0] }`
+      ? `/products/${  product.images[1] }`
+      : `/products/${  product.images[0] }`
 
 
   }, [isHovered, product.images])
@@ -42,14 +43,14 @@ export const ProductCard: FC<Props> = ({ product }) => {
                       component='img'
                       image={ productImage }
                       title={ product.title }
-                      // onLoad={() => console.log('cargó')} // esto se usa cuando la imagen o esa media es terminada de cargar
+                      onLoad={() => setIsImageLoaded(true)} // esto se usa cuando la imagen o esa media es terminada de cargar, osea que cuando el recurso se carga se ejecuta algo
                     />
                 </CardActionArea>
               </Link>
             </NextLink>
         </Card>
 
-        <Box sx={{ mt: 1 }} className='fadeIn'>
+        <Box sx={{ mt: 1, display: isImageLoaded ? 'block' : 'none' }} className='fadeIn'>
           <Typography fontWeight={700}>{ product.title }</Typography>
           <Typography fontWeight={500}>${ product.price }</Typography>
         </Box>
